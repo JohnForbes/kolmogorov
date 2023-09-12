@@ -1,4 +1,4 @@
-from src.filter import f as filter
+from str.is_well_formed import f as filter
 from src.str.to_next_str import f as to_next_str
 import os
 
