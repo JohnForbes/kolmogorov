@@ -13,4 +13,7 @@ if do_print:
   print()
 
 '/media/q/397e1061-5651-4223-830c-94dce731c7ba/people/Forbes/John/rx/r5/auto-py'
+
+js_prefix = 'export const f=x=>'
+py_prefix = 'f=lambda x:'
 """
