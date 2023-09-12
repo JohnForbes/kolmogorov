@@ -1,2 +1,2 @@
 from src.main import f
-print(f())
+print(f(4))
