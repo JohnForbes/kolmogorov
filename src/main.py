@@ -1,26 +1,15 @@
 from hak.pf import f as pf
 
-from src.dict.string_and_char_pairs.char_pair_frequencies_equal import f as cpfe
-from src.dict.string_and_char.count_char_freq import f as freq
 from src.str.to_next_str import f as to_next_str
+from src.filter import f as filter
 
 def f(x):
-  js_prefix = 'export const f=x=>'
-  a = ' '
+  string = ' '
   functions = []
-  while len(a)<(x-1):
-    a = to_next_str(a)
-    if all([
-      'x' in a,
-      a[0]!=' ',
-      a[ 0]!=')', a[ 0]!='}', a[ 0]!=']',
-      a[-1]!='(', a[-1]!='{', a[-1]!='[',
-      not freq({'string': a, 'char': '"'}) % 2,
-      not freq({'string': a, 'char': "'"}) % 2,
-      cpfe({'string': a, 'char_pairs': [("(", ")"), ("{", "}"), ("[", "]")]})
-    ]):
-      # print(js_prefix+x)
-      functions.append(a)
+  while len(string)<(x-1):
+    string = to_next_str(string)
+    if filter(string):
+      functions.append(string)
   return functions
 
 def t():
