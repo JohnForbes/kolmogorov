@@ -1,5 +1,6 @@
-from src.str.js.get_next import f as make_js
 from hak.pf import f as pf
+
+from src.str.to_next_str import f as make_js
 
 def f(x):
   js_prefix = 'export const f=x=>'
@@ -23,9 +24,13 @@ def f(x):
   return functions
 
 def t():
-  if len(f(1)) !=     0: return pf('len(f(1)) !=     0')
-  if len(f(2)) !=     0: return pf('len(f(2)) !=     0')
-  if len(f(3)) !=     1: return pf('len(f(3)) !=     1')
-  if len(f(4)) !=   173: return pf('len(f(4)) !=   173')
-  if len(f(5)) != 22462: return pf('len(f(5)) != 22462')
+  for (a, b) in [
+    (1,     0),
+    (2,     0),
+    (3,     1),
+    (4,   173),
+    (5, 22462),
+  ]:
+    if len(f(a)) != b:
+      return pf(f'len(f({a})) != {b}')
   return 1
