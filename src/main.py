@@ -1,23 +1,23 @@
 from hak.pf import f as pf
 
-from src.str.to_next_str import f as make_js
+from src.dict.string_and_char_pairs.char_pair_frequencies_equal import f as cpfe
+from src.dict.string_and_char.count_char_freq import f as freq
+from src.str.to_next_str import f as to_next_str
 
 def f(x):
   js_prefix = 'export const f=x=>'
   a = ' '
   functions = []
   while len(a)<(x-1):
-    a = make_js(a)
+    a = to_next_str(a)
     if all([
       'x' in a,
       a[0]!=' ',
       a[ 0]!=')', a[ 0]!='}', a[ 0]!=']',
       a[-1]!='(', a[-1]!='{', a[-1]!='[',
-      not (len(a)-len(a.replace('"',''))) % 2,
-      not (len(a)-len(a.replace("'",''))) % 2,
-      (len(a)-len(a.replace("(",'')))==(len(a)-len(a.replace(")",''))),
-      (len(a)-len(a.replace("{",'')))==(len(a)-len(a.replace("}",''))),
-      (len(a)-len(a.replace("[",'')))==(len(a)-len(a.replace("]",'')))
+      not freq({'string': a, 'char': '"'}) % 2,
+      not freq({'string': a, 'char': "'"}) % 2,
+      cpfe({'string': a, 'char_pairs': [("(", ")"), ("{", "}"), ("[", "]")]})
     ]):
       # print(js_prefix+x)
       functions.append(a)
