@@ -1,18 +1,35 @@
-from str.is_well_formed import f as filter
+from hak.one.directory.filepaths.get import f as get_filepaths
+from hak.one.file.remove import f as remove_file
+from hak.one.file.save import f as save_file
+from hak.one.file.load import f as load_file
+from time import sleep
+from time import time
+
+from src.str.is_well_formed import f as filter
 from src.str.to_next_str import f as to_next_str
-import os
 
-with open('out.txt', 'rb') as _file:
-  try:  # catch OSError in case of a one line file 
-    _file.seek(-2, os.SEEK_END)
-    while _file.read(1) != b'\n':
-      _file.seek(-2, os.SEEK_CUR)
-  except OSError:
-    _file.seek(0)
-  string = _file.readline().decode()
+get_t = lambda: int(time()/900)*900
 
-with open('out.txt', 'a') as _file:
-  while 1:
-    string = to_next_str(string)
-    if filter(string):
-      _file.write('\n'+string)
+string = load_file('latest.txt')
+latest = string
+print(f'string: {repr(string)}')
+
+while True:
+  filepaths = get_filepaths('./signal', [])
+  print(time(), filepaths)
+  print(f'string: {repr(string)}')
+  t = get_t()
+  with open(f'./output/out_{t}.txt', 'a') as _file:
+    for _ in range(600000):
+      string = to_next_str(string)
+      if filter(string):
+        latest = string
+        _file.write('\n'+latest)
+
+  save_file('latest.txt', latest)
+  
+  if './signal/stop.signal' in filepaths:
+    remove_file('./signal/stop.signal')
+    break
+
+print('fin')
